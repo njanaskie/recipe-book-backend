@@ -6,8 +6,7 @@ const router = require('./routes/router')
 const mongoose = require('mongoose');
 const cors = require('cors');
 const decodeIDToken = require('./middleware/authenticateToken');
-const scraper = require('./scraper/scraper')
-const publicPath = path.join(__dirname, 'client', 'web', 'public');
+const publicPath = path.join(__dirname, 'public');
 const port = process.env.PORT || 3001;
 
 mongoose.connect(
@@ -25,17 +24,15 @@ app.use(cors());
 app.use(express.json());
 app.use(decodeIDToken);
 
-// scraper.fetchURL()
-
 app.use('/api', router);
 
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(publicPath));
+// if(process.env.NODE_ENV === 'production') {
+//   app.use(express.static(publicPath));
 
-  app.get('*', (req, res) => {
-      res.sendFile(path.join(publicPath, 'index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//       res.sendFile(path.join(publicPath, 'index.html'));
+//   });
+// }
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

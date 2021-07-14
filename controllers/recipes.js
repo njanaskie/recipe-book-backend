@@ -1,30 +1,10 @@
 const recipesRouter = require('express').Router();
 const Recipe = require('../models/recipe');
-const scraper = require('../scraper/scraper');
-
-
-scrapeURL = async (req, res) => {
-    const auth = req.currentUser;
-
-    if (auth) {
-        try {
-            const url = req.body.url
-            const scrapedData = await scraper(url)
-            console.log('scrapeURL', scrapedData)
-            return res.json(scrapedData)
-        } catch (error) {
-            console.log('scrapeURL error', error)
-        }
-
-    }
-    return res.status(403).send('Not authorized scrapeURL get')
-}
 
 getRecipes = async (req, res) => {
         const auth = req.currentUser;
         const limit = req.query.per_page
         const skip = req.query.page === 1 ? 0 : (req.query.page * limit) - limit
-        console.log('req', req.query, skip, limit)
 
         if (auth) {
             const recipes = await Recipe.find({ savedBy: auth.uid })
@@ -148,5 +128,4 @@ module.exports = {
     createRecipe,
     removeRecipe,
     updateRecipe,
-    scrapeURL,
 };
