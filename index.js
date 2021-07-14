@@ -1,12 +1,12 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-require('dotenv').config({ path: '.env.development' });
-const router = require('./server/routes/router')
+require('dotenv').config({ path: '.env' });
+const router = require('./routes/router')
 const mongoose = require('mongoose');
 const cors = require('cors');
-const decodeIDToken = require('./server/middleware/authenticateToken');
-const scraper = require('./server/scraper/scraper')
+const decodeIDToken = require('./middleware/authenticateToken');
+const scraper = require('./scraper/scraper')
 const publicPath = path.join(__dirname, 'client', 'web', 'public');
 const port = process.env.PORT || 3001;
 
