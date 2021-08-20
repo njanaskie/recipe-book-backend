@@ -16,7 +16,7 @@ getRecipes = async (req, res) => {
             // const recipes = await Recipe.find({})
             return res.json(recipes.map((recipe) => recipe.toJSON() ));
         }
-        return res.status(403).send('Not authorized get')
+        return res.status(403).send('Not authorized to get recipes')
 
 }
 
@@ -36,7 +36,7 @@ createRecipe = async (req, res) => {
 
         return res.status(201).json(savedRecipe);
     }
-    return res.status(403).send('Not authorized post')
+    return res.status(403).send('Not authorized to post recipe')
 
 }
 
@@ -62,7 +62,7 @@ removeRecipe = async (req, res) => {
             console.log(error)
           }
     }   
-    return res.status(403).send('Not authorized post')
+    return res.status(403).send('Not authorized to remove recipe')
 
     // if (auth) {
     //     await Recipe.findOneAndDelete({ _id: req.params.id }, (err, recipe) => {

@@ -1,8 +1,8 @@
 # Recipe Book Backend
 
-Express and Node.js
+Express, Node.js, and MongoDB
 
 ## Local Development
 ```
-yarn run dev-server
+yarn run dev
 ```

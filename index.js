@@ -12,7 +12,7 @@ const port = process.env.PORT || 3001;
 mongoose.connect(
     process.env.MONGO_URI,
     { useNewUrlParser: true, useUnifiedTopology: true })
-     .then(() => {
+     .then((res) => {
        console.log('Connected to database');
      })
      .catch((err) => {
@@ -33,6 +33,10 @@ app.use('/api', router);
 //       res.sendFile(path.join(publicPath, 'index.html'));
 //   });
 // }
+
+app.get('/', (req, res) => {
+  res.send('My Express Server')
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
