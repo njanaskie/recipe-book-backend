@@ -5,9 +5,27 @@ getRecipes = async (req, res) => {
         const auth = req.currentUser;
         const limit = req.query.per_page
         const skip = req.query.page === 1 ? 0 : (req.query.page * limit) - limit
+        let cuisine = req.query.cuisine ? req.query.cuisine.split(',') : null
+        let type = req.query.type ? req.query.type.split(',') : null
+        let ingredients = req.query.ingredients ? req.query.ingredients.split(',') : null
+        let customTags = req.query.customTags ? req.query.customTags.split(',') : null
+        let queryObj = { savedBy: auth.uid }
+    
+        if (cuisine) {
+            queryObj = { ...queryObj, cuisine: { $in: cuisine }}
+        }
+        if (type) {
+            queryObj = { ...queryObj, type: { $in: type }}
+        }
+        if (ingredients) {
+            queryObj = { ...queryObj, ingredients: { $in: ingredients }}
+        }
+        if (customTags) {
+            queryObj = { ...queryObj, customTags: { $in: customTags }}
+        }
 
         if (auth) {
-            const recipes = await Recipe.find({ savedBy: auth.uid })
+            const recipes = await Recipe.find(queryObj)
                 .skip(parseInt(skip))
                 .limit(parseInt(limit))
                 .sort({
