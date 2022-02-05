@@ -25,14 +25,18 @@ getRecipes = async (req, res) => {
         }
 
         if (auth) {
-            const recipes = await Recipe.find(queryObj)
-                .skip(parseInt(skip))
-                .limit(parseInt(limit))
-                .sort({
-                    createdAt: 'desc'
-                })
-            // const recipes = await Recipe.find({})
-            return res.json(recipes.map((recipe) => recipe.toJSON() ));
+            try {
+                const recipes = await Recipe.find(queryObj)
+                    .skip(parseInt(skip))
+                    .limit(parseInt(limit))
+                    .sort({
+                        createdAt: 'desc'
+                    })
+                // const recipes = await Recipe.find({})
+                return res.json(recipes.map((recipe) => recipe.toJSON() ));
+            } catch (error) {
+                alert(error)
+            }
         }
         return res.status(403).send('Not authorized to get recipes')
 
@@ -48,11 +52,15 @@ createRecipe = async (req, res) => {
         // const data = {...body, ...scrapedData}
         // console.log('saving...', data);
 
-        console.log('saving...', body);
-        const recipe = new Recipe(body)
-        const savedRecipe = await recipe.save()
+        // console.log('saving...', body);
+        try {
+            const recipe = new Recipe(body)
+            const savedRecipe = await recipe.save()
+            return res.status(201).json(savedRecipe);
+        } catch (error) {
+            alert(error)
+        }
 
-        return res.status(201).json(savedRecipe);
     }
     return res.status(403).send('Not authorized to post recipe')
 
@@ -77,7 +85,7 @@ removeRecipe = async (req, res) => {
               data: {}
             });
           } catch (error) {
-            console.log(error)
+            alert(error)
           }
     }   
     return res.status(403).send('Not authorized to remove recipe')
