@@ -35,7 +35,7 @@ getRecipes = async (req, res) => {
                 // const recipes = await Recipe.find({})
                 return res.json(recipes.map((recipe) => recipe.toJSON() ));
             } catch (error) {
-                alert(error)
+                console.log(error)
             }
         }
         return res.status(403).send('Not authorized to get recipes')
@@ -58,7 +58,7 @@ createRecipe = async (req, res) => {
             const savedRecipe = await recipe.save()
             return res.status(201).json(savedRecipe);
         } catch (error) {
-            alert(error)
+            console.log(error)
         }
 
     }
@@ -85,7 +85,7 @@ removeRecipe = async (req, res) => {
               data: {}
             });
           } catch (error) {
-            alert(error)
+            console.log(error)
           }
     }   
     return res.status(403).send('Not authorized to remove recipe')
