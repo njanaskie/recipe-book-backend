@@ -4,6 +4,7 @@ const ingredientsController = require('../controllers/ingredients')
 const router = express.Router()
 
 router.get('/recipes', recipesController.getRecipes)
+router.get('/recipes/custom-tags', recipesController.getCustomTags)
 router.post('/recipes', recipesController.createRecipe)
 router.delete('/recipes/:id', recipesController.removeRecipe)
 router.put('/recipes/:id', recipesController.updateRecipe)

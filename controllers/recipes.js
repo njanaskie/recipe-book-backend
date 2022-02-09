@@ -42,6 +42,20 @@ getRecipes = async (req, res) => {
 
 }
 
+getCustomTags = async (req, res) => {
+    const auth = req.currentUser;
+
+    if (auth) {
+        try {
+            const customTags = await Recipe.find({ savedBy: auth.uid }).distinct('customTags')
+            return res.json(customTags);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    return res.status(403).send('Not authorized to get custom tags')
+}
+
 createRecipe = async (req, res) => {
     const auth = req.currentUser;
     const body = req.body
@@ -151,6 +165,7 @@ updateRecipe = async (req, res) => {
 
 module.exports = {
     getRecipes,
+    getCustomTags,
     createRecipe,
     removeRecipe,
     updateRecipe,
